@@ -269,24 +269,179 @@
 
 // 6. Make this run only onece
 
-let view;
+// let view;
 
-function likeTheVideo() {
-  let called = 0;
+// function likeTheVideo() {
+//   let called = 0;
+
+//   return function () {
+//     if( called > 0){
+//       console.log("alredy subcribed")
+//     }else {
+//       view = "roadside coder";
+//       console.log("subcribed", view);
+//       called++;
+//     }
+//   }
+// }
+
+// let isSubcribed = likeTheVideo();
+// isSubcribed();
+// isSubcribed();
+// isSubcribed();
+// isSubcribed();
+
+// 7. Once polyfill.
+
+/*function once(func, context) {
+  let run;
 
   return function () {
-    if( called > 0){
-      console.log("alredy subcribed")
-    }else {
-      view = "roadside coder";
-      console.log("subcribed", view);
-      called++;
+    if (func) {
+      run = func.apply(context || this, arguments);
+      func = null;
     }
-  }
+    return run;
+  };
 }
 
-let isSubcribed = likeTheVideo();
-isSubcribed();
-isSubcribed();
-isSubcribed();
-isSubcribed();
+const hello = once((a, b) => console.log("Hello Ankit", a, b));
+
+hello(1, 3);
+hello(1, 3);
+*/
+
+// Currying the javascript
+// Example f(a,b) int f(a)(b);
+/*
+function f(a) {
+  return function (b) {
+    return `${a} ${b}`;
+  };
+}
+
+console.log(f(4)(6));
+*/
+
+// Example 1. sum(2)(6)(1)
+/*
+function sum(a) {
+  return function (b) {
+    return function (c) {
+      return console.log(a + b + c);
+    };
+  };
+}
+
+sum(2)(6)(1);
+*/
+
+/* Example 2 - 
+    evaluate ("sum")(4)(2) => 6
+    evaluate ("multiply")(4)(2) => 8
+    evaluate ("division")(4)(2) => 2
+    evaluate ("subtract")(4)(2) => 2
+*/
+
+/*
+function evaluate(operation) {
+  return function (a) {
+    return function (b) {
+      if (operation === "sum") return a + b;
+      else if (operation === "multiply") return a * b;
+      else if (operation === "division") return a / b;
+      else if (operation === "subtract") return a - b;
+      else return "Invalid Operation";
+    };
+  };
+}
+
+console.log(evaluate("subtract")(8)(2));
+console.log(evaluate("multiply")(8)(2));
+console.log(evaluate("division")(8)(2));
+console.log(evaluate("sum")(8)(2));
+
+or  
+
+const mul = evaluate("multiply");
+console.log(mul(8)(2));
+*/
+
+// Example 3. Infinite Currying -> sum(1)(2)(3)...(n)
+/*
+function add(a) {
+  return function (b) {
+    if (b) return add(a + b);
+    return a;
+  };
+}
+
+console.log(add(3)(3)(3)(3)());
+*/
+
+/*
+// Example 4. Currying vs Partial Application
+
+// partial application
+function sum(a) {
+  return function (b, c) {
+    return a + b + c;
+  };
+}
+// Currying
+// function sum(a) {
+//   return function (b) {
+//     return function (c) {
+//       return a + b + c;
+//     };
+//   };
+// }
+
+const x = sum(10);
+console.log(x(2, 2));
+console.log(x(2, 3));
+
+// Or
+
+console.log(sum(10)(2, 2));
+*/
+
+/*
+// Example 5. Manipulating Dom
+
+function updateElementText(id) {
+  return function (content) {
+    document.querySelector("#" + id).textContent = content;
+  };
+}
+
+const updateHeader = updateElementText("heading");
+
+updateHeader("please help me")
+*/
+
+/*
+// Example 6. Curry Implementation
+// conver f(6, b, c) into f(a)(b)(c)
+// Problem with this example not getting proper output
+
+
+function curry(func) {
+  return function curriedFunc(...args) {
+    // console.log(args.length, func.length);
+    if (args.length >= func.length) {
+      return func(args);
+    } else {
+      return function (...next) {
+        return curriedFunc(...args, ...next);
+      };
+    }
+  };
+}
+
+const sum = (a, b, c, d) => a + b + c + d;
+
+const totalSum = curry(sum);
+
+console.log(totalSum(1)(6)(5)(6));
+*/
